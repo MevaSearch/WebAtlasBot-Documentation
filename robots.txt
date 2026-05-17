@@ -1,0 +1,15 @@
+User-agent: WebAtlasBot
+Disallow: /private/
+Disallow: /admin/
+Disallow: /tmp/
+
+# Block completely example:
+# User-agent: WebAtlasBot
+# Disallow: /
+
+# Allow full access example:
+# User-agent: WebAtlasBot
+# Allow: /
+
+# Throttle speed:
+Crawl-delay: 10
