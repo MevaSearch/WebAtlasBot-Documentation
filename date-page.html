@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta property="article:published_time" content="2026-05-17T14:30:00+02:00">
+    <meta name="publishdate" content="2026-05-17">
+    <meta name="dc.date.issued" content="2026-05-17">
+    
+    <title>WebAtlasBot — Metadata Timestamp Test</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --border-color: rgba(168, 85, 247, 0.2);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-purple: #a855f7;
+            --purple-glow: rgba(168, 85, 247, 0.08);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Ambientowe, powoli pulsujące tło */
+        .bg-glow {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.05) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseAmbient 8s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: cardSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: var(--accent-purple);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--accent-purple);
+            animation: pulseDot 2s infinite;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+        }
+
+        /* Sekcja z animowanym czasem */
+        .live-clock {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 1.15rem;
+            color: #e5e7eb;
+            display: inline-block;
+            letter-spacing: 0.05em;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .live-clock span {
+            color: var(--accent-purple);
+            font-weight: bold;
+        }
+
+        /* Animacje CSS */
+        @keyframes cardSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseAmbient {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+        }
+
+        @keyframes pulseDot {
+            0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.5); }
+            70% { box-shadow: 0 0 0 10px rgba(168, 85, 247, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="badge">
+            <span class="pulse-dot"></span> Timestamp Verifier
+        </div>
+        <h1>Metadata Extraction Page</h1>
+        <p>This document exposes explicit publication timestamps within its header. It is used to test if your crawler correctly extracts and formats the node's origin date.</p>
+        
+        <div class="live-clock">
+            Current: <span id="clock">2026-05-17 19:35:39</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const hh = String(now.getHours()).padStart(2, '0');
+        const min = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+        
+        document.getElementById('clock').textContent = `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
+</body>
+</html>
