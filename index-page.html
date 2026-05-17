@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAtlasBot Test Infrastructure</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-pub-bg: rgba(56, 189, 248, 0.03);
+            --card-priv-bg: rgba(244, 63, 94, 0.03);
+            --border-pub: rgba(56, 189, 248, 0.15);
+            --border-priv: rgba(244, 63, 94, 0.15);
+            --text-main: #e6edf3;
+            --text-muted: #8b949e;
+            --accent-pub: #38bdf8;
+            --accent-priv: #f43f5e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* Tło z ruszającymi się cząsteczkami w CSS */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, rgba(0,0,0,0) 70%);
+            top: -10%;
+            left: -10%;
+            animation: floatGlow 12s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: rgba(22, 27, 34, 0.6);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: cardAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            margin-bottom: 24px;
+            animation: fadeIn 1s ease internal 0.5s forwards;
+            opacity: 0;
+        }
+
+        .pub-badge {
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid var(--border-pub);
+            color: var(--accent-pub);
+        }
+
+        .priv-badge {
+            background: rgba(244, 63, 94, 0.08);
+            border: 1px solid var(--border-priv);
+            color: var(--accent-priv);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .pub-badge .pulse-dot {
+            background-color: var(--accent-pub);
+            box-shadow: 0 0 10px var(--accent-pub);
+            animation: pulseGlowPub 2s infinite;
+        }
+
+        .priv-badge .pulse-dot {
+            background-color: var(--accent-priv);
+            box-shadow: 0 0 10px var(--accent-priv);
+            animation: pulseGlowPriv 2s infinite;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            animation: fadeIn 1s ease forwards 0.2s;
+            opacity: 0;
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0;
+            animation: fadeIn 1s ease forwards 0.4s;
+            opacity: 0;
+        }
+
+        /* Kluczowe Animacje CSS */
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.2); }
+        }
+
+        @keyframes pulseGlowPub {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
+
+        @keyframes pulseGlowPriv {
+            0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(244, 63, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<div class="container">
+    <div class="card" style="border: 1px solid var(--border-pub);">
+        <div class="status-badge pub-badge">
+            <span class="pulse-dot"></span>Public Endpoint
+        </div>
+        <h1>Hello on my public page</h1>
+        <p>This resource is open for global verification and is actively mapped by search engine crawlers.</p>
+    </div>
+</div>
+
+</body>
+</html>
