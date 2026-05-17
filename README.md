@@ -11,7 +11,7 @@ The official search engine crawler for MevaSearch, building a safe and filter-fr
 Our bot uses the following User-Agent string:
 
 ```
-WebAtlasBot/1.8 (+https://mevasearch.com/bot)
+WebAtlasBot/2.0 (+https://mevasearch.com/bot)
 ```
 
 Always verify the bot via reverse DNS to ensure the request originates from MevaSearch infrastructure.
